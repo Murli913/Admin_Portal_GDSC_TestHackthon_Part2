@@ -20,7 +20,7 @@ function BlogInfo() {
   const getAllBlogs = async () => {
     setloading(true);
     try {
-      const productTemp = await getDoc(doc(fireDb, "blogPost", params.id))
+      const productTemp = await getDoc(doc(fireDb, "sucessstory", params.id))
       if (productTemp.exists()) {
         setGetBlogs(productTemp.data());
       } else {
@@ -48,7 +48,7 @@ function BlogInfo() {
   const [commentText, setCommentText] = useState('');
 
   const addComment = async () => {
-    const commentRef = collection(fireDb, "blogPost/" + `${params.id}/` + "comment")
+    const commentRef = collection(fireDb, "sucessstory/" + `${params.id}/` + "comment")
     try {
       await addDoc(
         commentRef, {
@@ -77,7 +77,7 @@ function BlogInfo() {
   const getcomment = async () => {
     try {
       const q = query(
-        collection(fireDb, "blogPost/" + `${params.id}/` + "comment/"),
+        collection(fireDb, "sucessstory/" + `${params.id}/` + "comment/"),
         orderBy('time')
       );
       const data = onSnapshot(q, (QuerySnapshot) => {

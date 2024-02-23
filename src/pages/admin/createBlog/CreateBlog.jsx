@@ -11,13 +11,22 @@ import { Timestamp, addDoc, collection } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { fireDb, storage } from '../../../firebase/FirebaseConfig';
+
+
+const categories = [
+    "Child abuse",
+    "Human Trafficking",
+    "Sexual harassment",
+    "Women sexual assault",
+    "Child migration",
+  ];
 function CreateBlog() {
     const context = useContext(myContext);
     const { mode } = context;
 
     const [blogs, setBlogs] = useState({
         title : "",
-        category : "",
+      
         content : "",
         time : Timestamp.now(),
     });
@@ -29,11 +38,15 @@ function CreateBlog() {
 
     const navigate = useNavigate();
     
-
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [errorCategory, setErrorCategory] = useState(false);
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
+      };
     // console.log(blogs)
 
     const addPost = async () => {
-        if(blogs.title === "" || blogs.category === "" || blogs.content === "" || blogs.thumbnail  === ""){
+        if(blogs.title === "" || blogs.category === ""  || blogs.thumbnail  === ""){
             return toast.error("All fields are required")
         }
         uploadImage();
@@ -44,10 +57,11 @@ function CreateBlog() {
         const imageRef = ref(storage, `blogimage/${thumbnail.name}`);
         uploadBytes(imageRef, thumbnail).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
-                const productRef = collection(fireDb, "blogPost")
+                const productRef = collection(fireDb, "sucessstory")
                 try {
                     addDoc(productRef, {
                         blogs,
+                        category: selectedCategory,
                         thumbnail: url,
                         time: Timestamp.now(),
                         date: new Date().toLocaleString(
@@ -106,7 +120,7 @@ function CreateBlog() {
                                     : 'black'
                             }}
                         >
-                            Create blog
+                            Create Success Story
                         </Typography>
                     </div>
                 </div>
@@ -128,7 +142,7 @@ function CreateBlog() {
                         className="mb-2 font-semibold"
                         style={{ color: mode === 'dark' ? 'white' : 'black' }}
                     >
-                        Upload Thumbnail
+                        Upload Story
                     </Typography>
 
                     {/* First Thumbnail Input  */}
@@ -165,7 +179,7 @@ function CreateBlog() {
                     />
                 </div>
 
-                {/* Third Category Input  */}
+                {/* Third Category Input 
                 <div className="mb-3">
                     <input
                         label="Enter your Category"
@@ -183,11 +197,64 @@ function CreateBlog() {
                         value={blogs.category}
                         onChange={(e)=> setBlogs({...blogs, category : e.target.value})}
                     />
-                </div>
+                </div> */}
+{/* dropdown */}
+   {/* Category Dropdown
+   <label>Comaplint Type</label>
+   <div className="mb-3">
+              <select
+                className="shadow-[inset_0_0_4px_rgba(0,0,0,0.6)] w-full rounded-md p-1.5 
+                "
+                style={{
+                  background:
+                    mode === "dark" ? "#dcdde1" : "rgb(226, 232, 240)",
+                }}
+                onChange={handleCategoryChange}
+                value={selectedCategory}
+              >
+                <option value="">Select complaint type</option>
+                {categories.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+              {errorCategory && (
+                <p style={{ color: "red" }}>Please select a category.</p>
+              )}
+            </div> */}
 
-                {/* Four Editor  */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                {/* Four Editor 
                 <Editor
-                    apiKey='9jo3lu73p1xbfqaw6jvgmsbrmy7qr907nqeafe1wbek6os9d'
+                    apiKey='1vgqlmi1i1z3ujb25edhy00z1km0nk4iu0d91kqzhwpf1h7a'
                     onEditorChange={(newValue, editor) => {
                         setBlogs({ ...blogs, content: newValue });
                         settext(editor.getContent({ format: 'text' }));
@@ -198,7 +265,23 @@ function CreateBlog() {
                     init={{
                         plugins: 'a11ychecker advcode advlist advtable anchor autocorrect autolink autoresize autosave casechange charmap checklist code codesample directionality editimage emoticons export footnotes formatpainter fullscreen help image importcss inlinecss insertdatetime link linkchecker lists media mediaembed mentions mergetags nonbreaking pagebreak pageembed permanentpen powerpaste preview quickbars save searchreplace table tableofcontents template  tinydrive tinymcespellchecker typography visualblocks visualchars wordcount'
                     }}
-                />
+                /> */}
+
+                    {/* Four Editor  */}
+          <Editor
+            apiKey="r5xdhc208mmf6vcsxoeqj2x4bzx4x76uibzzka5bf10cmttb"
+            onEditorChange={(newValue, editor) => {
+              setBlogs({ ...blogs, content: newValue });
+              settext(editor.getContent({ format: "text" }));
+            }}
+            onInit={(evt, editor) => {
+              settext(editor.getContent({ format: "text" }));
+            }}
+            init={{
+              plugins:
+                "a11ychecker advcode advlist advtable anchor autocorrect autolink autoresize autosave casechange charmap checklist code codesample directionality editimage emoticons export footnotes formatpainter fullscreen help image importcss inlinecss insertdatetime link linkchecker lists media mediaembed mentions mergetags nonbreaking pagebreak pageembed permanentpen powerpaste preview quickbars save searchreplace table tableofcontents template  tinydrive tinymcespellchecker typography visualblocks visualchars wordcount",
+            }}
+          />
 
                 {/* Five Submit Button  */}
                 <Button className=" w-full mt-5"
@@ -216,7 +299,7 @@ function CreateBlog() {
                 </Button>
 
                 {/* Six Preview Section  */}
-                <div className="">
+                {/* <div className="">
                     <h1 className=" text-center mb-3 text-2xl">Preview</h1>
                     <div className="content">
                     <div
@@ -256,7 +339,7 @@ function CreateBlog() {
                          dangerouslySetInnerHTML={createMarkup(blogs.content)}>
                     </div>
             </div>
-        </div >
+        </div > */}
             </div >
         </div >
     )

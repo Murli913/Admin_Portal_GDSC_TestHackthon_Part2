@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MyContext from './myContext';
-import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
-import { fireDb } from '../../firebase/FirebaseConfig';
+import { collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { auth, fireDb } from '../../firebase/FirebaseConfig';
 import toast from 'react-hot-toast';
 
 function MyState(props) {
@@ -27,7 +27,7 @@ function MyState(props) {
         setloading(true);
         try {
             const q = query(
-                collection(fireDb, "blogPost"),
+                collection(fireDb, "sucessstory"),
                 orderBy('time')
             );
             const data = onSnapshot(q, (QuerySnapshot) => {
@@ -62,6 +62,26 @@ function MyState(props) {
             console.log(error)
         }
     }
+
+   
+  
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     return (
         <MyContext.Provider value={{ 
@@ -72,7 +92,9 @@ function MyState(props) {
             loading,
             setloading,
             getAllBlog ,
-            deleteBlogs
+            deleteBlogs,
+        
+           
             }}>
             {props.children}
         </MyContext.Provider>

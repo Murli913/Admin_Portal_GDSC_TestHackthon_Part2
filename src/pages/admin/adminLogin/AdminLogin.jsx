@@ -32,7 +32,8 @@ export default function AdminLogin() {
             const result = await signInWithEmailAndPassword(auth, email, password);
             toast.success("Login successful")
             localStorage.setItem("admin", JSON.stringify(result));
-            navigate('/dashboard')
+            navigate('/adminhome')
+            localStorage.setItem("isAuth", true);
         } catch (error) {
             console.log(error)
             toast.error("Login failed")
