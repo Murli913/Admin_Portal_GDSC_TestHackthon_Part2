@@ -23,7 +23,7 @@ function AllBlogs() {
                     <div className="mb-5">
                         <h1 className=' text-center text-2xl font-bold'
                             style={{ color: mode === 'dark' ? 'white' : 'black' }}>
-                            All Blogs
+                            All Complaints
                         </h1>
                     </div>
                     {/* Main Content  */}
